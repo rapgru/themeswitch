@@ -1,7 +1,7 @@
 {
 	"name": "themeswitch",
 	"displayName": "ThemeSwitch",
-	"description": "Switch your theme according to specified daytimes",
+	"description": "Automatically switch your theme according to a specified timeline of themes",
 	"version": "0.0.1",
 	"engines": {
 		"vscode": "^1.33.0"
@@ -10,16 +10,43 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:extension.helloWorld"
+		"*"
 	],
 	"main": "./extension.js",
 	"contributes": {
-		"commands": [
-			{
-				"command": "extension.helloWorld",
-				"title": "Hello World"
+		"configuration": {
+			"type": "object",
+			"title": "ThemeSwitch",
+			"properties": {
+				"themeswitch.directives": {
+					"type": "array",
+					"title": "Switch directives",
+					"default": [],
+					"description": "Specifies a list of switch directives (time of day and theme name combinations)",
+					"items": {
+						"type": "object",
+						"examples": [
+							{
+								"time": "19:40",
+								"theme": "Monokai"
+							}
+						],
+						"required": ["time", "theme"],
+						"title": "Specifies a single switch directive",
+						"properties": {
+							"time": {
+								"type": "string",
+								"description": "Activation time of the switch directive (HH:MM, 24h format)"
+							},
+							"theme": {
+								"type": "string",
+								"description": "The name of the theme this switch directive activates when it is triggered"
+							}
+						}
+					}
+				}
 			}
-		]
+		}
 	},
 	"scripts": {
 		"postinstall": "node ./node_modules/vscode/bin/install",
