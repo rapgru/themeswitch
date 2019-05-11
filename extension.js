@@ -45,8 +45,6 @@ function getNextSwitch(switches){
 
 	let all_negative = differences.every(i => i.diff <= 0);
 
-	console.log()
-
 	if(all_negative){
 		let result = differences.reduce((p, v) => ( p.diff < v.diff ? p : v ));
 		result.date = new Date(result.date.getTime() + 1000*60*60*24);
@@ -70,9 +68,7 @@ function applyTheme(tswitch){
 
 function startTimer(switches) {
 	const nextSwitch = getNextSwitch(switches);
-	console.log("next switch " + JSON.stringify(nextSwitch));
 	let timer = setTimeout(() => {
-		console.log("executing switch");
 		applyTheme(nextSwitch);
 		startTimer(switches);
 	}, nextSwitch.diff);
@@ -80,14 +76,11 @@ function startTimer(switches) {
 }
 
 function createSwitches(config) {
-	console.log("config: " + JSON.stringify('config'));
-	console.log("configProcessed: " + JSON.stringify(config.map(e => ({ switchHour: e.time.split(':')[0], switchMinute: e.time.split(':')[1], theme: e.theme }))))
 	return config.map(e => ({ switchHour: parseInt(e.time.split(':')[0]), switchMinute: parseInt(e.time.split(':')[1]), theme: e.theme }));
 }
 
 function getConfig(){
 	const conf = vscode.workspace.getConfiguration('themeswitch').get('directives');
-	console.log(conf);
 	return (conf ? conf : []); 
 }
 
@@ -103,14 +96,8 @@ function checkConfigAndStart(){
  * @param {vscode.ExtensionContext} context
  */
 function activate(context) {
-
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "themeswitch" is now active!');
-
 	vscode.workspace.onDidChangeConfiguration((e) => {
 		if(e.affectsConfiguration('themeswitch')){
-			console.log('Config changed');
 			clearTimeout(currentTimer);
 			checkConfigAndStart();
 		}
@@ -119,7 +106,6 @@ function activate(context) {
 }
 exports.activate = activate;
 
-// this method is called when your extension is deactivated
 function deactivate() {
 	clearTimeout(currentTimer);
 }
