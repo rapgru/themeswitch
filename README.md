@@ -1,65 +1,42 @@
-# themeswitch README
+# ThemeSwitch
 
-This is the README for your extension "themeswitch". After writing up a brief description, we recommend including the following sections.
+Like having a light theme on the day and a dark one in the night?
 
-## Features
+If the answer is yes, you know how annoying it can be to care about switchung color themes on a daily basis.
+This extension eliminates this extensive, manual theme switching and automatically applies different themes per day.
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+## Settings
 
-For example if there is an image subfolder under your extension project workspace:
+This extension is mainly configured through the configuration key `themeswitch.directives`.
 
-\!\[feature X\]\(images/feature-x.png\)
+This key contains a list of so-called **switch directives**. A switch directive is the combination of a
+time of day and a color theme name. ThemeSwitch will then activate the specified theme when the point of time occurs.
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+In the config a **switch directive** is a object containing two keys:
 
-## Requirements
+* `time`: Time in HH:MM format (24h)
+* `theme`: Name of the theme to activate
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+### Example
 
-## Extension Settings
+```javascript
+"themeswitch.directives": [
+    {
+        "time": "19:00",
+        "theme": "Dark (Visual Studio)"
+    },
+    {
+        "time": "07:00",
+        "theme": "Light (Visual Studio)"
+    }
+]
+```
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
-
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
+This configuration will activate the dark theme from 19:00 in the evening till 7:00 in the morning.
+From 7:00 to 19:00 the light theme will be applied.
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
+### 0.1.0
 
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
------------------------------------------------------------------------------------------------------------
-
-## Working with Markdown
-
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
-
-### For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+Basic Implementation
